@@ -1,3 +1,4 @@
+import Cursor from '../components/Cursor/cursor'
 import GlobalStyles from '../utils/styles/global.styled'
 
 function MyApp({ Component, pageProps }) {
@@ -5,6 +6,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <GlobalStyles />
       <Component {...pageProps} />
+      <Cursor />
     </>
   )
 }

@@ -8,7 +8,8 @@ const typo = `
   body,
   button,
   select {
-    color: black;
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
     font-size: 1.6rem;
   }
 
@@ -27,7 +28,7 @@ const typo = `
   }
 
   a {
-    color: black;
+    color: #ffffff;
     text-decoration: none;
   }
 `

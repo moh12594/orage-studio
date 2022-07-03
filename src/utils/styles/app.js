@@ -6,7 +6,7 @@ const appStyle = `
    */
 
   html {
-    background-color: white;
+    background-color: #000000;
     height: 100%;
     --100vh: calc(var(--vh, 1vh) * 100);
   }
@@ -22,7 +22,7 @@ const appStyle = `
   }
 
   a {
-    color: black;
+    color: #ffffff;
   }
 `
 
