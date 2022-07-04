@@ -2,10 +2,7 @@ import React from 'react'
 import Styled from './cursor.styled'
 
 export default function Cursor() {
-  const [coordinates, setCoordinates] = React.useState({
-    x: 0,
-    y: 0,
-  })
+  const [coordinates, setCoordinates] = React.useState(null)
 
   const onMouseMove = (event) => {
     window.requestAnimationFrame(() => {
@@ -22,7 +19,7 @@ export default function Cursor() {
     return () => document.removeEventListener('mousemove', onMouseMove)
   }, [])
 
-  return (
+  return coordinates ? (
     <Styled
       style={{
         position: 'absolute',
@@ -33,5 +30,5 @@ export default function Cursor() {
       <p>{`y${coordinates.y}`}</p>
       <p>{`x${coordinates.x}`}</p>
     </Styled>
-  )
+  ) : null
 }

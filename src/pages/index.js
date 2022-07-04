@@ -1,16 +1,20 @@
-import Head from 'next/head'
-import Navigation from '../components/Navigation/navigation'
+import { client } from '../api/client'
+import { GET_ALL_PROJECTS } from '../api/queries/projects'
+import HomePage from '../components/HomePage/home-page'
 
-export default function Home() {
-  return (
-    <>
-    <Head>
-        <title>Orage studio - home page</title>
-        <meta name="description" content="Orage studio" />
-        <link rel="icon" href="/favicon.ico" />
-    </Head>
-    <Navigation />
-    <p>Hello home page</p>
-    </>
-  )
+export async function getServerSideProps() {
+  const projects = await client.query({
+    query: GET_ALL_PROJECTS,
+  })
+
+  return {
+    props: {
+      projects: projects.data || [],
+      error: projects.error || null,
+    },
+  }
+}
+
+export default function Home(props) {
+  return <HomePage {...props} />
 }

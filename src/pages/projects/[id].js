@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import Navigation from '../../components/Navigation/navigation'
 
@@ -15,5 +16,9 @@ const MenuPage = (props) => (
     <div>Hello project with ID: {props.projectId}</div>
   </>
 )
+
+MenuPage.propTypes = {
+  projectId: PropTypes.string,
+}
 
 export default MenuPage

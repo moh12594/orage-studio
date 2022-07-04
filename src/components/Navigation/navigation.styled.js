@@ -33,11 +33,6 @@ Styled.item = styled.a`
   &:hover {
     color: ${lighten(0.5, '#ffffff')};
   }
-
-  &:after {
-    content: '|';
-    margin: 0 0.8rem;
-  }
 `
 
 export default Styled
