@@ -5,6 +5,7 @@ import Styled from './video-player.styled'
 export default function VideoPlayer({
   id,
   src,
+  poster,
 }) {
   return (
     <Styled
@@ -12,6 +13,7 @@ export default function VideoPlayer({
       src={src}
       height={500}
       width={500}
+      poster={poster}
       autoPlay
       muted
       loop
@@ -22,4 +24,5 @@ export default function VideoPlayer({
 VideoPlayer.propTypes = {
   id: PropTypes.string,
   src: PropTypes.string,
+  poster: PropTypes.string,
 }

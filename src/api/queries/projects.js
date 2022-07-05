@@ -7,8 +7,14 @@ export const GET_ALL_PROJECTS = gql`
       sys {
         id
       }
+      categories {
+        label
+      }
       title
       details
+      cover {
+        url
+      }
       video {
         title
         description

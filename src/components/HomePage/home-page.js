@@ -50,6 +50,7 @@ export default function HomePage({ projects, error }) {
             <VideoPlayer
               id={state.context.actualProject.sys.id}
               src={state.context.actualProject.video.url}
+              poster={state.context.actualProject.cover.url}
             />
             <Styled.detailsContainer>
               <Heading>{state.context.actualProject.video.title}</Heading>

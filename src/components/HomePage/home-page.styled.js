@@ -39,7 +39,7 @@ Styled.progressBar = styled.li`
   display: block;
   position: relative;
   list-style: none;
-  border: white 0.1rem solid;
+  border: ${({ theme }) => theme.colors.light} 0.1rem solid;
   height: 2.4rem;
   width: 0.4rem;
   border-radius: 0.8rem;
@@ -50,7 +50,7 @@ Styled.progressBar = styled.li`
     position: absolute;
     bottom: 0;
     content: '';
-    background-color: ${({ $isSelected }) => $isSelected ? 'white' : 'transparent'};
+    background-color: ${({ $isSelected, theme }) => $isSelected ? theme.colors.light : 'transparent'};
     height: ${({ $progressValue }) => `${$progressValue}%`};
     width: 100%;
   }

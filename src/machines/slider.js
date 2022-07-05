@@ -49,7 +49,6 @@ export const sliderMachine = createMachine({
       on: {
         SET_ACTUAL_PROJECT: {
           target: 'settingNextProject',
-          actions: assign(computeNextProject),
         }
       }
     },
