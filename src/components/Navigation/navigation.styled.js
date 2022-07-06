@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
+import Arrow from '../Icons/arrow'
 
 const Styled = styled.nav`
   display: flex;
@@ -38,6 +40,8 @@ Styled.links = styled.div`
 `
 
 Styled.item = styled.a`
+  display: flex;
+  align-items: center;
   padding: 0.8rem 0;
   cursor: pointer;
   transition: color 0.3s;
@@ -52,12 +56,16 @@ Styled.item = styled.a`
   }
 `
 
-Styled.dropdown = styled.div`
+Styled.dropdown = styled(motion.div)`
   position: absolute;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  top: 3.2rem;
+  top: 4rem;
+`
+
+Styled.arrowDropdown = styled(Arrow)`
+  margin-left: 0.4rem;
 `
 
 export default Styled

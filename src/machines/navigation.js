@@ -6,8 +6,8 @@ export const navigationMachine = createMachine({
   initial: 'idle',
   context: {
     items: [
-      { id: 1, label: 'home', route: '/' },
-      { id: 2, label: 'Projects', route: '/projects' },
+      { id: 1, label: 'Home', route: '/' },
+      { id: 2, label: 'Works', route: '/projects' },
       { id: 3, label: 'About', route: '/about' },
     ],
     currentRoute: null,
@@ -49,6 +49,11 @@ export const navigationMachine = createMachine({
     },
     extendedCategories: {
       on: {
+        UPDATE_CATEGORY: {
+          actions: assign({
+            currentFilter: (context, event) => event.filter,
+          })
+        },
         CLOSE_CATEGORIES: {
           target: 'idle',
         }

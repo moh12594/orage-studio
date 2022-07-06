@@ -2,7 +2,7 @@ import { client } from '../../api/client'
 import { GET_ALL_PROJECTS } from '../../api/queries/projects'
 import ProjectsPage from '../../components/ProjectsPage/projects-page'
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const projects = await client.query({
     query: GET_ALL_PROJECTS,
   })
@@ -12,6 +12,7 @@ export async function getServerSideProps() {
       projects: projects.data || [],
       error: projects.error || null,
     },
+    revalidate: 3600 * 3,
   }
 }
 

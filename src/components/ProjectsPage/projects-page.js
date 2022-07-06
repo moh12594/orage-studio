@@ -7,10 +7,33 @@ import Heading from '../Heading/heading'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_CATEGORIES } from '../../api/queries/categories'
 import Styled from './projects-page.styled'
+import { client } from '../../api/client'
+import { GET_ALL_PROJECTS, GET_PROJECTS_BY_FILTER } from '../../api/queries/projects'
 
 export default function ProjectsPage({ projects }) {
   const { data } = useQuery(GET_ALL_CATEGORIES)
+  const [localProjects, setLocalProjects] = React.useState(projects)
   const [currentVideoPlaying, setCurrentVideoPlaying] = React.useState(null)
+
+  React.useEffect(() => {
+    if (projects?.length > 0) {
+      setLocalProjects(projects)
+    }
+  }, [projects])
+
+  const onFilterProjects = async (filter) => {
+    if (filter === 'all') {
+      const projects = await client.query({
+        query: GET_ALL_PROJECTS,
+      })
+      return setLocalProjects(projects?.data || [])
+    }
+    const projects = await client.query({
+      query: GET_PROJECTS_BY_FILTER,
+      variables: { filter }
+    })
+    return setLocalProjects(projects?.data || [])
+  }
 
   return (
     <>
@@ -19,10 +42,17 @@ export default function ProjectsPage({ projects }) {
         <meta name="description" content="Orage studio" />
         <link rel="icon" href="/favicon.ico" />
     </Head>
-    <Navigation categories={data?.categoriesCollection?.items} />
-    {projects?.projectCollection?.items ? (
-      <Styled>
-        {projects.projectCollection.items.map((project) => (
+    <Navigation
+      categories={data?.categoriesCollection?.items}
+      onFilterProjects={onFilterProjects}
+    />
+    {localProjects?.projectCollection?.items ? (
+      <Styled
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+      >
+        {localProjects.projectCollection.items.map((project) => (
           <Link key={project.sys.id} href={`/projects/${project.sys.id}`}>
             <Styled.projectItem
               onMouseEnter={() => {

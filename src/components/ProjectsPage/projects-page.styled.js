@@ -1,9 +1,10 @@
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 
-const Styled = styled.main`
+const Styled = styled(motion.main)`
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 50% 50%;
+  grid-template-rows: 1fr auto 1fr;
   grid-column-gap: 0;
   grid-row-gap: 0;
   position: absolute;

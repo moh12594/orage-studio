@@ -1,24 +1,33 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Navigation from '../../components/Navigation/navigation'
+import { client } from '../../api/client'
+import { GET_PROJECT_BY_ID } from '../../api/queries/projects'
+import ProjectPage from '../../components/ProjectPage/project-page'
 
-export async function getServerSideProps(context) {
+
+
+export async function getStaticProps(context) {
+  const project = await client.query({
+    query: GET_PROJECT_BY_ID,
+    variables: { id: context.params.id }
+  })
+
   return {
     props: {
-      projectId: context.params.id,
+      project: project.data?.project || [],
+      error: project.error || null,
     },
   }
 }
 
-const MenuPage = (props) => (
-  <>
-    <Navigation />
-    <div>Hello project with ID: {props.projectId}</div>
-  </>
-)
-
-MenuPage.propTypes = {
-  projectId: PropTypes.string,
+export async function getStaticPaths() {
+  return { paths: [], fallback: true }
 }
 
-export default MenuPage
+const Project = (props) => <ProjectPage {...props} />
+
+Project.propTypes = {
+  project: PropTypes.object,
+}
+
+export default Project

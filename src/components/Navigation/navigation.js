@@ -5,8 +5,9 @@ import Styled from './navigation.styled'
 import { useMachine } from '@xstate/react'
 import { useRouter } from 'next/router'
 import { navigationMachine } from '../../machines/navigation'
+import { dropdownVariants } from '../../utils/animations/navigations'
 
-export default function Navigation({ categories }) {
+export default function Navigation({ categories, onFilterProjects, projectTitle }) {
   const router = useRouter()
   const [state, send] = useMachine(navigationMachine)
 
@@ -20,36 +21,37 @@ export default function Navigation({ categories }) {
     }
   }, [categories])
 
+  const handleExtendNavigation = (event) => {
+    event.stopPropagation()
+    return state.matches('extended')
+      ? send({ type: 'CLOSE_NAVIGATION' })
+      : send({ type: 'EXTEND_NAVIGATION' })
+  }
 
   const handleLinkClick = (route) => (event) => {
     event.stopPropagation()
-    if (state.context.currentRoute === route.route && state.matches('extended')) {
-      send({ type: 'CLOSE_NAVIGATION' })
-      return
-    } else if (state.context.currentRoute === route.route) {
-      send({ type: 'EXTEND_NAVIGATION' })
-      return
-    }
-  
     send({ type: 'CLOSE_NAVIGATION' })
     return router.push(route.route)
   }
 
   const handleFilterClick = (filter) => (event) => {
     event.stopPropagation()
-    if (state.context.currentFilter.label === filter.label && state.matches('extendedCategories')) {
-      send({ type: 'CLOSE_CATEGORIES' })
-      return
-    } else if (state.context.currentFilter.label === filter.label ) {
-      send({ type: 'EXTEND_CATEGORIES' })
-      return
-    }
-  
+    onFilterProjects(filter.label)
     send({ type: 'CLOSE_CATEGORIES' })
     return send({ type: 'UPDATE_CATEGORY', filter })
   }
 
-  const currentItem = state.context.items.find((item) => state.context.currentRoute === item.route)
+  const handleExtendCategories = (event) => {
+    event.stopPropagation()
+    return state.matches('extendedCategories')
+      ? send({ type: 'CLOSE_CATEGORIES' })
+      : send({ type: 'EXTEND_CATEGORIES' })
+  }
+
+  const currentItem = state.context.items.find((item) => {
+    return state.context.currentRoute?.includes('projects') && state.context.currentRoute !== '/projects' ? 
+    item.route === '/projects' : state.context.currentRoute === item.route
+  })
 
   return (
     <Styled>
@@ -69,13 +71,17 @@ export default function Navigation({ categories }) {
         <Styled.links>
           {currentItem ? (
             <Styled.item
-              onClick={handleLinkClick(currentItem)}
+              onClick={handleExtendNavigation}
               $isSelected
             >
-              {currentItem.label}
+              <span>{currentItem.label}</span>
+              <Styled.arrowDropdown fill="white" width={15} height={15} />
             </Styled.item>
           ) : null}
-          <Styled.dropdown>
+          <Styled.dropdown
+            animate={state.matches('extended') ? 'open' : 'closed'}
+            variants={dropdownVariants}
+          >
             {state.matches('extended') ? (
               state.context.items.filter((route) => route.id != currentItem.id).map((route) => (
                 <Styled.item
@@ -90,31 +96,45 @@ export default function Navigation({ categories }) {
             ) : null}
           </Styled.dropdown>
         </Styled.links>
-        <Styled.prefix as="span">/</Styled.prefix>
-        {state.context.filters ? (
-          <Styled.links>
-            {state.context.currentFilter ? (
-              <Styled.item
-                onClick={handleFilterClick(state.context.currentFilter)}
-                $isSelected
-              >
-                {state.context.currentFilter.label}
-              </Styled.item>
-            ) : null}
-            <Styled.dropdown>
-              {state.matches('extendedCategories') ? (
-                state.context.filters.filter((filter) => state.context.currentFilter.label !== filter.label).map((filter) => (
-                  <Styled.item
-                    key={filter.label} 
-                    onClick={handleFilterClick(filter.label)}
-                    $isExtended
-                  >
-                    {filter.label}
-                  </Styled.item>
-                ))
+        {state.context.filters?.length > 1 && !projectTitle ? (
+          <>
+            <Styled.prefix as="span">/</Styled.prefix>
+            <Styled.links>
+              {state.context.currentFilter ? (
+                <Styled.item
+                  onClick={handleExtendCategories}
+                  $isSelected
+                >
+                  <span>{state.context.currentFilter.label}</span>
+                  <Styled.arrowDropdown fill="white" width={15} height={15} />
+                </Styled.item>
               ) : null}
-            </Styled.dropdown>
-          </Styled.links>
+              <Styled.dropdown
+                animate={state.matches('extendedCategories') ? 'open' : 'closed'}
+                variants={dropdownVariants}
+              >
+                {state.matches('extendedCategories') ? (
+                  state.context.filters.filter((filter) => state.context.currentFilter.label !== filter.label).map((filter) => (
+                    <Styled.item
+                      key={filter.label} 
+                      onClick={handleFilterClick(filter)}
+                      $isExtended
+                    >
+                      {filter.label}
+                    </Styled.item>
+                  ))
+                ) : null}
+              </Styled.dropdown>
+            </Styled.links>
+          </>
+        ) : null}
+        {projectTitle ? (
+          <>
+            <Styled.prefix as="span">/</Styled.prefix>
+            <Styled.links>
+              <Styled.item $isSelected>{projectTitle}</Styled.item>
+            </Styled.links>
+          </>
         ) : null}
       </Styled.navigations>
 
@@ -124,4 +144,12 @@ export default function Navigation({ categories }) {
 
 Navigation.propTypes = {
   categories: PropTypes.array,
+  projectTitle: PropTypes.string,
+  onFilterProjects: PropTypes.func,
+}
+
+Navigation.defaultProps = {
+  categories: null,
+  projectTitle: null,
+  onFilterProjects: () => {},
 }
