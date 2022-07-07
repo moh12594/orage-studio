@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import Typography from '../Typography/typography'
 
 const Styled = styled.div`
   position: relative;
