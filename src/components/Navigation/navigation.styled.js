@@ -6,7 +6,7 @@ import Arrow from '../Icons/arrow'
 const Styled = styled.nav`
   display: flex;
   font-size: 1.3rem;
-  padding: 1.6rem 15rem 1.6rem 5rem;
+  padding: 1.6rem 15rem 1.6rem 5%;
   align-items: center;
   justify-content: space-between;
   font-weight: 1000;

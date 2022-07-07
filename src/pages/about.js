@@ -1,16 +1,5 @@
-import Head from 'next/head'
-import Navigation from '../components/Navigation/navigation'
+import AboutPage from '../components/AboutPage/about-page'
 
 export default function About() {
-  return (
-    <>
-    <Head>
-        <title>Orage studio - about page</title>
-        <meta name="description" content="Orage studio" />
-        <link rel="icon" href="/favicon.ico" />
-    </Head>
-    <Navigation />
-    <p>Hello about page</p>
-    </>
-  )
+  return <AboutPage />
 }
