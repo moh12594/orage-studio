@@ -1,3 +1,10 @@
+const fontsCached = [
+  '/walkway/Walkway-SemiBold.ttf',
+  '/walkway/Walkway-Bold.ttf',
+  '/walkway/Walkway-UltraBold.ttf',
+  '/walkway/Walkway-Black.ttf',
+]
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
@@ -9,7 +16,16 @@ const nextConfig = {
     domains: ['images.ctfassets.net'],
   },
   headers() {
-    return [
+    return fontsCached.map((font) => ({
+      source: font,
+      headers: [
+        {
+          key: 'Cache-Control',
+          value: 'public, max-age=31536000, immutable',
+        },
+      ],
+    }))
+    .concat([
       {
         source: '/(.*)',
         headers: [
@@ -20,8 +36,8 @@ const nextConfig = {
           { key: 'Referrer-Policy', value: 'same-origin' },
         ],
       },
-    ]
-  },
+    ])
+  }
 }
 
 module.exports = nextConfig

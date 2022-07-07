@@ -8,14 +8,15 @@ const typo = `
   body,
   button,
   select {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'walkway', sans-serif;
+    font-weight: 500;
     color: #ffffff;
     font-size: 1.6rem;
   }
 
   /* Normalize */
   strong {
-    font-weight: bold;
+    font-weight: 700;
   }
 
   em {

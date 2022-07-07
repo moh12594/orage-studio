@@ -12,13 +12,15 @@ const DynamicCursor = dynamic(() => import('../components/Cursor/cursor'), {
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <Component {...pageProps} />
-        <DynamicCursor />
-      </ThemeProvider>
-    </ApolloProvider>
+    <>
+      <GlobalStyles />
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+          <DynamicCursor />
+        </ThemeProvider>
+      </ApolloProvider>
+    </>
   )
 }
 

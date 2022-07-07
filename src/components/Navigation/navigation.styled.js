@@ -9,6 +9,7 @@ const Styled = styled.nav`
   padding: 1.6rem 3.4rem;
   align-items: center;
   justify-content: space-between;
+  font-weight: 900;
 `
 
 Styled.logo = styled(Image)`
