@@ -5,21 +5,22 @@ import Arrow from '../Icons/arrow'
 
 const Styled = styled.nav`
   display: flex;
-  font-size: 1.6rem;
-  padding: 1.6rem 3.4rem;
+  font-size: 1.3rem;
+  padding: 1.6rem 15rem 1.6rem 5rem;
   align-items: center;
   justify-content: space-between;
-  font-weight: 900;
+  font-weight: 1000;
 `
 
 Styled.logo = styled(Image)`
-  width: 20rem !important;
-  height: 20rem !important;
+  width: 10rem !important;
+  height: 10rem !important;
 `
 
 Styled.logoWrapper = styled.a`
   padding: 1.6rem 0;
-  width: 10rem;
+  width: 7rem;
+  cursor: pointer;
 `
 
 Styled.navigations = styled.div`
@@ -27,6 +28,7 @@ Styled.navigations = styled.div`
   align-items: center;
   position: relative;
   z-index: 3;
+  letter-spacing: 6px;
 `
 
 Styled.prefix = styled.span`
@@ -38,12 +40,13 @@ Styled.prefix = styled.span`
 Styled.links = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: -4px;
 `
 
 Styled.item = styled.a`
   display: flex;
   align-items: center;
-  padding: 0.8rem 0;
+  padding: 0.6rem 0;
   cursor: pointer;
   transition: color 0.3s;
   text-transform: uppercase;
@@ -62,11 +65,13 @@ Styled.dropdown = styled(motion.div)`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  top: 4rem;
+  top: 3.7rem;
 `
 
 Styled.arrowDropdown = styled(Arrow)`
-  margin-left: 0.4rem;
+  margin: 0 0.8rem 0 0.4rem;
+  padding-top: 0.6rem;
+  width: 10px;
 `
 
 export default Styled
