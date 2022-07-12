@@ -2,7 +2,36 @@ import { gql } from '@apollo/client'
 
 export const GET_ALL_PROJECTS = gql`
 query GetAllProjects {
-  projectCollection {
+  projectCollection(order: priority_ASC) {
+    items {
+      sys {
+        id
+      }
+      categories {
+        label
+      }
+      title
+      details
+      cover {
+        url
+      }
+      video {
+        title
+        description
+        fileName
+        url
+      }
+    }
+  }
+}
+`
+
+export const GET_ALL_HIGHLIGHTED_PROJECTS = gql`
+query GetAllHighlightedProjects {
+  projectCollection(where: {
+    visibleInHomePage: true
+    video_exists: true
+  }, order: priority_ASC) {
     items {
       sys {
         id
@@ -71,6 +100,7 @@ export const GET_PROJECT_BY_ID = gql`
           height
           width
           title
+          contentType
         }
       }
       title

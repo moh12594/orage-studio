@@ -56,7 +56,7 @@ export default function HomePage({ projects, error }) {
               <Heading>{state.context.actualProject.video.title}</Heading>
               <Typography>{state.context.actualProject.video.description}</Typography>
               <Styled.details>
-                {state.context.actualProject.details.split('\n').map((line, index) => (
+                {state.context.actualProject.details?.split('\n').map((line, index) => (
                   <span key={index}>{line}<br /></span>
                 ))}
               </Styled.details>

@@ -5,8 +5,8 @@ import { motion } from 'framer-motion'
 import Typography from '../Typography/typography'
 import Navigation from '../Navigation/navigation'
 import Heading from '../Heading/heading'
-import Image from 'next/image'
 import Styled from './project-page.styled'
+import Image from 'next/image'
 
 export default function ProjectPage({
   project,
@@ -22,12 +22,23 @@ export default function ProjectPage({
       <Styled>
         <Styled.details>
           <Styled.videoContainer>
-            <Styled.video
-              src={project.video.url}
-              autoPlay
-              muted
-              loop
-            />
+            {project.video?.url ? (
+              <Styled.video
+                src={project.video.url}
+                poster={project.cover.url}
+                autoPlay
+                muted
+                loop
+              />
+            ) : (
+              <Styled.video
+                src={project.cover.url}
+                alt={project.title}
+                as="img"
+                width={500}
+                height={500}
+              />
+            )}
             <Heading>{project.title}</Heading>
             <Typography>{project.categories?.label}</Typography>
           </Styled.videoContainer>
@@ -36,26 +47,39 @@ export default function ProjectPage({
               <span key={index}>{line}<br /></span>
             ))}
           </Styled.credits>
-          <Styled.showMore>Making Of</Styled.showMore>
+          {project.imagesCollection?.items?.length > 0 ? <Styled.showMore>Making Of</Styled.showMore> : null}
         </Styled.details>
-        <Styled.makingOf>
-          {project.imagesCollection.items.map((image) => (
-            <motion.div
-              key={image.url}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-            >
-              <Image
-                src={image.url}
-                height={300}
-                width={600}
-                alt={image.title}
-                objectFit="fill"
-              />
-            </motion.div>
-          ))}
-        </Styled.makingOf>
+        {project.imagesCollection.items?.length > 0 ? (
+          <Styled.makingOf>
+            {project.imagesCollection.items.map((media) => (
+              <motion.div
+                key={media.url}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+              >
+                {media.contentType.indexOf('video') !== -1 ? (
+                  <video
+                    src={media.url}
+                    height={300}
+                    width={600}
+                    alt={media.title}
+                    controls
+                    muted
+                  />
+                ) : (
+                  <Image
+                    src={media.url}
+                    height={300}
+                    width={600}
+                    alt={media.title}
+                    objectFit="fill"
+                  />
+                )}
+              </motion.div>
+            ))}
+          </Styled.makingOf>
+        ) : null}
       </Styled>
     </>
   ) : null

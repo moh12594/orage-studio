@@ -1,10 +1,10 @@
 import { client } from '../api/client'
-import { GET_ALL_PROJECTS } from '../api/queries/projects'
+import { GET_ALL_HIGHLIGHTED_PROJECTS } from '../api/queries/projects'
 import HomePage from '../components/HomePage/home-page'
 
 export async function getStaticProps() {
   const projects = await client.query({
-    query: GET_ALL_PROJECTS,
+    query: GET_ALL_HIGHLIGHTED_PROJECTS,
   })
 
   return {
@@ -12,10 +12,7 @@ export async function getStaticProps() {
       projects: projects.data || [],
       error: projects.error || null,
     },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every 10 seconds
-    revalidate: 3600 * 3, // In seconds
+    revalidate: 3600 * 3,
   }
 }
 

@@ -11,7 +11,6 @@ export async function getStaticProps(context) {
     query: GET_PROJECT_BY_ID,
     variables: { id: context.params.id }
   })
-
   return {
     props: {
       project: project.data?.project || [],

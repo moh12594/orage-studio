@@ -20,6 +20,7 @@ Styled.projectItem = styled.a`
   position: relative;
   justify-content: center;
   min-height: 40rem;
+  cursor: pointer;
 `
 
 Styled.coverImage = styled.img`

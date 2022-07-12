@@ -68,7 +68,7 @@ export default function ProjectsPage({ projects }) {
                 width={500}
                 height={500}
               />
-              {currentVideoPlaying === project.title ? (
+              {project.video?.url && currentVideoPlaying === project.title ? (
                 <Styled.video
                   src={project.video.url}
                   poster={project.cover.url}
