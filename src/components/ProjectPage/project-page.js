@@ -26,9 +26,7 @@ export default function ProjectPage({
               <Styled.video
                 src={project.video.url}
                 poster={project.cover.url}
-                autoPlay
-                muted
-                loop
+                controls
               />
             ) : (
               <Styled.video
@@ -64,7 +62,7 @@ export default function ProjectPage({
                     height={300}
                     width={600}
                     alt={media.title}
-                    controls
+                    autoPlay
                     muted
                   />
                 ) : (

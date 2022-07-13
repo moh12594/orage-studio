@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
+import Heading from '../Heading/heading'
+import Typography from '../Typography/typography'
 
 const Styled = styled(motion.main)`
   display: grid;
@@ -14,13 +16,27 @@ const Styled = styled(motion.main)`
   bottom: 0;
 `
 
+Styled.category = styled(Typography)`
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+`
+
+Styled.title = styled(Heading)``
+
 Styled.projectItem = styled.a`
   align-items: center;
   display: flex;
+  flex-direction: column;
   position: relative;
   justify-content: center;
   min-height: 40rem;
   cursor: pointer;
+
+  &:hover {
+    ${Styled.category} {
+      opacity: 1;
+    }
+  }
 `
 
 Styled.coverImage = styled.img`

@@ -7,6 +7,10 @@ import { useRouter } from 'next/router'
 import { navigationMachine } from '../../machines/navigation'
 import { dropdownVariants } from '../../utils/animations/navigations'
 
+function matchIsSingleProjectPage(state) {
+  return state.context.currentRoute?.includes('projects') && state.context.currentRoute !== '/projects'
+}
+
 export default function Navigation({ categories, onFilterProjects, projectTitle }) {
   const router = useRouter()
   const [state, send] = useMachine(navigationMachine)
@@ -23,6 +27,10 @@ export default function Navigation({ categories, onFilterProjects, projectTitle 
 
   const handleExtendNavigation = (event) => {
     event.stopPropagation()
+    if (matchIsSingleProjectPage(state)) {
+      return router.push('/projects')
+    }
+    send({ type: 'CLOSE_CATEGORIES' })
     return state.matches('extended')
       ? send({ type: 'CLOSE_NAVIGATION' })
       : send({ type: 'EXTEND_NAVIGATION' })
@@ -43,13 +51,14 @@ export default function Navigation({ categories, onFilterProjects, projectTitle 
 
   const handleExtendCategories = (event) => {
     event.stopPropagation()
+    send({ type: 'CLOSE_NAVIGATION' })
     return state.matches('extendedCategories')
       ? send({ type: 'CLOSE_CATEGORIES' })
       : send({ type: 'EXTEND_CATEGORIES' })
   }
 
   const currentItem = state.context.items.find((item) => {
-    return state.context.currentRoute?.includes('projects') && state.context.currentRoute !== '/projects' ? 
+    return matchIsSingleProjectPage(state) ? 
     item.route === '/projects' : state.context.currentRoute === item.route
   })
 
@@ -67,7 +76,7 @@ export default function Navigation({ categories, onFilterProjects, projectTitle 
         </Styled.logoWrapper>
       </Link>
       <Styled.navigations>
-        <Styled.prefix as="span">C/ORAGE/2022/</Styled.prefix>
+        <Styled.prefix as="span">C:\ORAGE\2022\</Styled.prefix>
         <Styled.links>
           {currentItem ? (
             <Styled.item
@@ -130,7 +139,7 @@ export default function Navigation({ categories, onFilterProjects, projectTitle 
         ) : null}
         {projectTitle ? (
           <>
-            <Styled.prefix as="span">/</Styled.prefix>
+            <Styled.prefix as="span">\</Styled.prefix>
             <Styled.links>
               <Styled.item $isSelected>{projectTitle}</Styled.item>
             </Styled.links>

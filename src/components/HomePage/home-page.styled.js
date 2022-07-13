@@ -31,7 +31,10 @@ Styled.detailsContainer = styled.div`
 Styled.progressBars = styled.ul`
   position: absolute;
   bottom: 5rem;
-  left: 2rem;
+  left: 0;
+  right: 0;
+  align-items: center;
+  justify-content: center;
   display: flex;
 `
 

@@ -53,7 +53,7 @@ export default function HomePage({ projects, error }) {
               poster={state.context.actualProject.cover.url}
             />
             <Styled.detailsContainer>
-              <Heading>{state.context.actualProject.video.title}</Heading>
+              <Heading><a href={`/projects/${state.context.actualProject.sys.id}`}>{state.context.actualProject.video.title}</a></Heading>
               <Typography>{state.context.actualProject.video.description}</Typography>
               <Styled.details>
                 {state.context.actualProject.details?.split('\n').map((line, index) => (

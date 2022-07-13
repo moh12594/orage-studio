@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Head from 'next/head'
 import Link from 'next/link'
 import Navigation from '../../components/Navigation/navigation'
-import Heading from '../Heading/heading'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_CATEGORIES } from '../../api/queries/categories'
 import Styled from './projects-page.styled'
@@ -78,7 +77,8 @@ export default function ProjectsPage({ projects }) {
                   muted
                 />
               ) : null}
-              <Heading>{project.title}</Heading>
+              <Styled.title>{project.title}</Styled.title>
+              <Styled.category>{project.categories.label}</Styled.category>
             </Styled.projectItem>
           </Link>
         ))}
