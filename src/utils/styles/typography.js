@@ -8,7 +8,7 @@ const typo = `
   body,
   button,
   select {
-    font-family: 'walkway', sans-serif;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     font-weight: 500;
     color: #ffffff;
     font-size: 1.6rem;

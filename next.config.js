@@ -1,8 +1,5 @@
 const fontsCached = [
   '/walkway/Walkway-SemiBold.ttf',
-  '/walkway/Walkway-Bold.ttf',
-  '/walkway/Walkway-UltraBold.ttf',
-  '/walkway/Walkway-Black.ttf',
 ]
 
 /** @type {import('next').NextConfig} */

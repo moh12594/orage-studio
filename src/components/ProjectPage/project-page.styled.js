@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Arrow from '../Icons/arrow'
 import Typography from '../Typography/typography'
 
 const Styled = styled.div`
@@ -8,6 +9,10 @@ const Styled = styled.div`
 Styled.details = styled.div`
   display: flex;
   height: calc(100vh - 164px);
+  position: relative;
+`
+
+Styled.still = styled.div`
   position: relative;
 `
 
@@ -30,16 +35,27 @@ Styled.showMore = styled.div`
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 3.6rem;
+  bottom: 1.2rem;
   margin: 0 auto;
   width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 `
+
+Styled.arrowMore = styled(Arrow)`
+  height: 25px;
+  width: 25px;
+  margin-top: 10px;
+`
+
 
 Styled.makingOf = styled.div`
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 30rem 30rem;
-  grid-gap: 0.8rem;
+  grid-template-columns: repeat(2, minmax(30rem, 1fr));
+  grid-gap: 1.6rem;
   padding: 3.2rem 0 8rem;
 `
 

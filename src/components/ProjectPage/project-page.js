@@ -7,10 +7,19 @@ import Navigation from '../Navigation/navigation'
 import Heading from '../Heading/heading'
 import Styled from './project-page.styled'
 import Image from 'next/image'
+import Play from '../Icons/play'
 
 export default function ProjectPage({
   project,
 }) {
+  const videoRef = React.useRef(null)
+  const [videoHasBeenPlayed, setVideoHasBeenPlayed] = React.useState(false)
+
+  const handlePlay = () => {
+    videoRef.current?.play()
+    setVideoHasBeenPlayed(true)
+  }
+
   return project ? (
     <>
     <Head>
@@ -22,21 +31,34 @@ export default function ProjectPage({
       <Styled>
         <Styled.details>
           <Styled.videoContainer>
-            {project.video?.url ? (
-              <Styled.video
-                src={project.video.url}
-                poster={project.cover.url}
-                controls
-              />
-            ) : (
-              <Styled.video
-                src={project.cover.url}
-                alt={project.title}
-                as="img"
-                width={500}
-                height={500}
-              />
-            )}
+            <Styled.still>
+              {project.video?.url ? (
+                <>
+                  {videoHasBeenPlayed ? null : (
+                    <Play
+                      width="100px"
+                      height="100px"
+                      onClick={handlePlay}
+                      role="button"
+                    />
+                  )}
+                  <Styled.video
+                    ref={videoRef}
+                    src={project.video.url}
+                    poster={project.cover.url}
+                    controls={videoHasBeenPlayed}
+                  />
+                </>
+              ) : (
+                <Styled.video
+                  src={project.cover.url}
+                  alt={project.title}
+                  as="img"
+                  width={500}
+                  height={500}
+                />
+              )}
+            </Styled.still>
             <Heading>{project.title}</Heading>
             <Typography>{project.categories?.label}</Typography>
           </Styled.videoContainer>
@@ -45,7 +67,12 @@ export default function ProjectPage({
               <span key={index}>{line}<br /></span>
             ))}
           </Styled.credits>
-          {project.imagesCollection?.items?.length > 0 ? <Styled.showMore>Making Of</Styled.showMore> : null}
+          {project.imagesCollection?.items?.length > 0 ? (
+            <Styled.showMore>
+              Making Of
+              <Styled.arrowMore fill="white" />
+            </Styled.showMore>
+          ) : null}
         </Styled.details>
         {project.imagesCollection.items?.length > 0 ? (
           <Styled.makingOf>
@@ -55,6 +82,7 @@ export default function ProjectPage({
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
+                style={{ margin: '0 auto' }}
               >
                 {media.contentType.indexOf('video') !== -1 ? (
                   <video
@@ -69,7 +97,7 @@ export default function ProjectPage({
                   <Image
                     src={media.url}
                     height={300}
-                    width={600}
+                    width={300}
                     alt={media.title}
                     objectFit="fill"
                   />
